@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { optionType } from '../types'
+import { forecastType, optionType } from '../types'
 
 const useForecast = () => {
   const [term, setTerm] = useState<string>('')
   const [city, setCity] = useState<optionType | null>(null)
   const [options, setOptions] = useState<[]>([])
-  const [forecast, setForecast] = useState(null)
+  const [forecast, setForecast] = useState<forecastType | null>(null)
 
   const getSearchOptions = (value: string) => {
     fetch(
@@ -33,7 +33,12 @@ const useForecast = () => {
 		`
     )
       .then((res) => res.json())
-      .then((data) => setForecast(data))
+      .then((data) => {
+        const forecastDta = { ...data.city, list: data.list.slice(0) }
+
+        setForecast(forecastDta)
+      })
+      .catch((err) => console.log(err))
   }
 
   const onSubmit = () => {
