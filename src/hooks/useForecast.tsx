@@ -9,7 +9,9 @@ const useForecast = () => {
 
   const getSearchOptions = (value: string) => {
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&lang=en&appid=${
+      `${
+        import.meta.env.VITE_BASE_URL
+      }/geo/1.0/direct?q=${value.trim()}&limit=5&lang=en&appid=${
         import.meta.env.VITE_API_KEY
       }`
     )
@@ -27,7 +29,7 @@ const useForecast = () => {
 
   const getForecast = (city: optionType) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${
+      `${import.meta.env.VITE_BASE_URL}/data/2.5/forecast?lat=${city.lat}&lon=${
         city.lon
       }&appid=${import.meta.env.VITE_API_KEY}
 		`
